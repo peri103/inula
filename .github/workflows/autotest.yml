@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v1
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Run tests
-        run: cd packages/inula & pnpm test -- --coverage
+        run: cd packages/inula & npm test -- --coverage
