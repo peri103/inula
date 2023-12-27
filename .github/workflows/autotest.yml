@@ -1,0 +1,24 @@
+name: Auto Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run tests
+        run: cd packages/inula & pnpm test -- --coverage
