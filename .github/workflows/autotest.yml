@@ -23,4 +23,4 @@ jobs:
         run: pnpm install
 
       - name: Run tests
-        run: cd packages/inula & pnpm test -- --coverage
+        run: cd packages/inula & pnpm test
