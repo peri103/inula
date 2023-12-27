@@ -8,7 +8,7 @@
     "prettier": "prettier -w libs/**/*.ts",
     "build:inula": "pnpm -F openinula build",
     "test:inula": "pnpm -F openinula test",
-    "test:inula-jest": "pnpm -F openinula test -- --coverage --coverageReporters json-summary",
+    "test:inula-jest": "pnpm -F openinula test -- --coverage",
     "build:inula-cli": "pnpm -F inula-cli build",
     "build:inula-intl": "pnpm -F inula-intl build",
     "build:inula-request": "pnpm -F inula-request build",

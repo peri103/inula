@@ -23,9 +23,9 @@ jobs:
         run: pnpm install
 
       - name: Run tests
-        run: pnpm run test:inula-jest
+        run: pnpm run test:inula-jest | tee ./coverage.txt && exit ${PIPESTATUS[0]}
 
       - name: Jest Coverage Comment
         uses: MishaKav/jest-coverage-comment@main
         with:
-          coverage-summary-path: ./packages/inula/coverage/coverage-final.json
+          coverage-path: ./coverage.txt
