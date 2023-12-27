@@ -23,8 +23,10 @@ jobs:
         run: pnpm install
 
       - name: Run tests
-        uses: willcaul/jest-github-action@v4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          test-command: "pnpm run test:inula-jest"
+        run: pnpm run test:inula-jest
+
+      - name: Enter package folder
+        run: cd packages/inula
+
+      - name: Jest Coverage Comment
+        uses: MishaKav/jest-coverage-comment@main
