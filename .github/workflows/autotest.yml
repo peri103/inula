@@ -19,13 +19,21 @@ jobs:
         with:
           version: latest
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: pnpm install
 
-      - name: Run tests
+      - name: Run Tests
         run: pnpm run test:inula-jest | tee ./coverage.txt && exit ${PIPESTATUS[0]}
 
       - name: Jest Coverage Comment
+        id: jest_coverage_comment
         uses: MishaKav/jest-coverage-comment@main
         with:
           coverage-path: ./coverage.txt
+
+      - name: Check Coverage
+        run: |
+          if [ ${{ steps.jest_coverage_comment.outputs.coverage }} -lt 80 ]; then
+            echo "Coverage is less than 80%. Failing the workflow."
+            exit 1
+          fi
