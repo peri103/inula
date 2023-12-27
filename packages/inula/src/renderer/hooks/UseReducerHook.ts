@@ -66,7 +66,7 @@ export function TriggerAction<S, A>(vNode: VNode, hook: Hook<S, A>, isUseState: 
 
   if (vNode === getProcessingVNode()) {
     // 绑定的VNode就是当前渲染的VNode时，就是在函数组件体内触发setState
-    markUpdatedInRender();
+    // markUpdatedInRender();
   } else {
     // 执行vNode节点渲染
     launchUpdateFromVNode(vNode);

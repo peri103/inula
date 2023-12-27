@@ -40,19 +40,19 @@ describe('useMemo Hook Test', () => {
     };
     Inula.render(<App words="App" />, container);
     expect(container.querySelector('p').innerHTML).toBe('App');
-    expect(container.querySelector('#p').innerHTML).toBe('1');
+    expect(container.querySelector('#p').innerHTML).toBe('0');
     // 修改useMemo的依赖项，num会加一，text会改变。
     setMemo('Apps');
     expect(container.querySelector('p').innerHTML).toBe('Apps');
-    expect(container.querySelector('#p').innerHTML).toBe('2');
+    expect(container.querySelector('#p').innerHTML).toBe('1');
     // useMemo的依赖项不变，num不会加一，text不会改变。
     setMemo('Apps');
     expect(container.querySelector('p').innerHTML).toBe('Apps');
-    expect(container.querySelector('#p').innerHTML).toBe('2');
+    expect(container.querySelector('#p').innerHTML).toBe('1');
     // 修改useMemo的依赖项，num会加一，text会改变。
     setMemo('App');
     expect(container.querySelector('p').innerHTML).toBe('App');
-    expect(container.querySelector('#p').innerHTML).toBe('3');
+    expect(container.querySelector('#p').innerHTML).toBe('2');
   });
 
   it('触发useMemo', () => {
