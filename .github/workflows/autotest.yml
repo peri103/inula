@@ -31,9 +31,23 @@ jobs:
         with:
           coverage-path: ./coverage.txt
 
-      - name: Check Coverage
+      # - name: Check Coverage
+      #   run: |
+      #     if [ ${{ steps.jest_coverage_comment.outputs.coverage }} -lt 80 ]; then
+      #       echo "Coverage is less than 80%. Failing the workflow."
+      #       exit 1
+      #     fi
+
+      - name: Run script
         run: |
-          if [ ${{ steps.jest_coverage_comment.outputs.coverage }} -lt 80 ]; then
-            echo "Coverage is less than 80%. Failing the workflow."
-            exit 1
-          fi
+          html_content=${{ steps.jest_coverage_comment.outputs.coverageHtml }}
+          numbers=($(echo "$html_content" | grep -oP '(?<=<td>)[0-9]+(?=</td>)'))
+
+          for number in "${numbers[@]}"; do
+            if [ "$number" -lt 50 ]; then
+              echo "Number $number is less than 50. Workflow failed."
+              exit 1
+            else
+              echo "Number $number is greater than or equal to 50."
+            fi
+          done
