@@ -23,4 +23,8 @@ jobs:
         run: pnpm install
 
       - name: Run tests
-        run: pnpm run test:inula-jest
+        uses: willcaul/jest-github-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          test-command: "pnpm run test:inula-jest"
