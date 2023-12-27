@@ -25,10 +25,7 @@ jobs:
       - name: Run tests
         run: pnpm run test:inula-jest
 
-      - name: Enter package folder
-        run: cd packages/inula
-
       - name: Jest Coverage Comment
         uses: MishaKav/jest-coverage-comment@main
         with:
-          coverage-summary-path: coverage/coverage-final.json
+          coverage-summary-path: ./packages/inula/coverage/coverage-final.json
