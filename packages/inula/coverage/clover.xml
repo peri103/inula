@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1703675921451" clover="3.2.0">
-  <project timestamp="1703675921451" name="All files">
+<coverage generated="1703676189516" clover="3.2.0">
+  <project timestamp="1703676189516" name="All files">
     <metrics statements="4424" coveredstatements="3486" conditionals="2708" coveredconditionals="1868" methods="888" coveredmethods="677" elements="8020" coveredelements="6031" complexity="0" loc="4424" ncloc="4424" packages="28" files="120" classes="120"/>
     <package name="scripts.__tests__.HorizonXTest.StoreFunctionality">
       <metrics statements="6" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="2"/>
