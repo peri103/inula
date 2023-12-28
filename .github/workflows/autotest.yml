@@ -1,5 +1,9 @@
 name: Auto Test
 
+env:
+  total_coverage: 75
+  coverage_per_file: 20
+
 on:
   push:
     branches: [main]
@@ -33,7 +37,7 @@ jobs:
 
       - name: Check Total Coverage
         run: |
-          if [ ${{ steps.jest_coverage_comment.outputs.coverage }} -lt 75 ]; then
+          if [ ${{ steps.jest_coverage_comment.outputs.coverage }} -lt ${{ env.total_coverage }} ]; then
             echo "Coverage is less than 75%. Failing the workflow."
             exit 1
           fi
@@ -43,7 +47,7 @@ jobs:
           html_content="${{ steps.jest_coverage_comment.outputs.coverageHtml }}"
           matches=$(echo "$html_content" | grep -o '<td>[1-9][0-9]*\(\.[0-9]*\)\{0,1\}</td>' | sed 's/<td>\(.*\)<\/td>/\1/g')
           while read -r match; do
-            result=$(awk -v num="$match" 'BEGIN {if (num < 2) print "fail"; else print "pass"}')
+            result=$(awk -v num="$match" 'BEGIN {if (num < ${{ env.coverage_per_file }}) print "fail"; else print "pass"}')
             echo "Number: $match Result: $result"
             if [ "$result" == "fail" ]; then
               echo "Workflow failed!"
