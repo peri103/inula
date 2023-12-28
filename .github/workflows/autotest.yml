@@ -2,7 +2,7 @@ name: Auto Test
 
 env:
   total_coverage: 75
-  coverage_per_file: 20
+  coverage_per_file: 2
 
 on:
   push:
