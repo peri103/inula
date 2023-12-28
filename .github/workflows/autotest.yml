@@ -41,7 +41,7 @@ jobs:
       - name: Check Coverage Per File
         run: |
           html_content=${{ steps.jest_coverage_comment.outputs.coverageHtml }}
-          numbers=$(echo "$html_content" | grep -oP '(?<=<tb>)[0-9]+(\.[0-9]+)?(?=<\/tb>)')
+          numbers=$(echo "$html_content" | grep -oP "(?<=<tb>)[0-9]+(\.[0-9]+)?(?=</tb>)")
 
           for number in $numbers; do
             if (( $(echo "$number < 0" | bc -l) )); then
@@ -51,8 +51,3 @@ jobs:
               echo "Number $number is greater than or equal to 0."
             fi
           done
-
-
-
-
-
