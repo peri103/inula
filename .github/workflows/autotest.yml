@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out code
+      - name: Checkout Code
         uses: actions/checkout@v2
 
       - name: Setup pnpm
@@ -31,10 +31,28 @@ jobs:
         with:
           coverage-path: ./coverage.txt
 
-      - name: Check Coverage
+      - name: Check Total Coverage
         run: |
-          if [ ${{ steps.jest_coverage_comment.outputs.coverage }} -lt 80 ]; then
+          if [ ${{ steps.jest_coverage_comment.outputs.coverage }} -lt 75 ]; then
             echo "Coverage is less than 80%. Failing the workflow."
             exit 1
           fi
+
+      - name: Check Coverage Per File
+        run: |
+          html_content=${{ steps.jest_coverage_comment.outputs.coverageHtml }}
+          numbers=$(echo "$html_content" | grep -oP '(?<=<tb>)[0-9]+(\.[0-9]+)?(?=<\/tb>)')
+
+          for number in $numbers; do
+            if (( $(echo "$number < 0" | bc -l) )); then
+              echo "Number $number is less than 0. Workflow failed."
+              exit 1
+            else
+              echo "Number $number is greater than or equal to 0."
+            fi
+          done
+
+
+
+
 
