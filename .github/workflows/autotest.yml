@@ -40,7 +40,7 @@ jobs:
 
       - name: Check Coverage Per File
         run: |
-          html_content=${{ steps.jest_coverage_comment.outputs.summaryHtml }}
+          html_content=${{ steps.jest_coverage_comment.outputs.coverageHtml }}
           matches=$(echo "$html_var" | grep -o '<td>[0-9]*\.[0-9]*</td>' | sed 's/<td>\(.*\)<\/td>/\1/g')
           while read -r match; do
             result=$(awk -v num="$match" 'BEGIN {if (num < 2) print "fail"; else print "pass"}')
