@@ -41,13 +41,25 @@ jobs:
       - name: Check Coverage Per File
         run: |
           html_content=${{ steps.jest_coverage_comment.outputs.coverageHtml }}
-          numbers=$(echo "$html_content" | grep -oP "(?<=<tb>)[0-9]+(\.[0-9]+)?(?=</tb>)")
 
-          for number in $numbers; do
-            if (( $(echo "$number < 0" | bc -l) )); then
-              echo "Number $number is less than 0. Workflow failed."
-              exit 1
-            else
-              echo "Number $number is greater than or equal to 0."
-            fi
+          regex='<td>([0-9]+\.[0-9]+)<\/td>'
+          while [[ $html_content =~ $regex ]]; do
+              
+              decimal="${BASH_REMATCH[1]}"
+
+              if (( $(echo "$decimal < 0" | bc -l) )); then
+                  echo "Workflow failed. The decimal $decimal is less than 0."
+                  exit 1
+              else
+                  echo "Decimal $decimal is greater than or equal to 0."
+              fi
+
+              html_content="${html_content#*${BASH_REMATCH[0]}}"
           done
+
+          echo "All decimals are greater than or equal to 0. Workflow passed."
+
+
+
+
+
