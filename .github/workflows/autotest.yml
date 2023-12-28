@@ -34,7 +34,7 @@ jobs:
       - name: Check Total Coverage
         run: |
           if [ ${{ steps.jest_coverage_comment.outputs.coverage }} -lt 75 ]; then
-            echo "Coverage is less than 80%. Failing the workflow."
+            echo "Coverage is less than 75%. Failing the workflow."
             exit 1
           fi
 
@@ -51,7 +51,3 @@ jobs:
             fi
           done <<< "$matches"
           echo "Workflow passed!"
-
-
-
-
