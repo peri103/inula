@@ -17,7 +17,7 @@ import * as Inula from '../../../../src/index';
 import { getLogUtils } from '../../jest/testUtils';
 import { Text } from '../../jest/commonComponents';
 
-describe('useMemo Hook Test', () => {
+describe('Use Memo Test', () => {
   const { useMemo, useState } = Inula;
   const LogUtils = getLogUtils();
 
