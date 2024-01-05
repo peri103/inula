@@ -18,6 +18,9 @@ import { Action, Path } from '../history/types';
 type Location = Partial<Path>
 
 // 定义位置变化和history方法调用的Action type
+/**
+ * @description: 定义位置变化和history方法调用的Action type
+ */
 export enum ActionName {
   LOCATION_CHANGE = '$inula-router/LOCATION_CHANGE',
   CALL_HISTORY_METHOD = '$inula-router/CALL_HISTORY_METHOD'

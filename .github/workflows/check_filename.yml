@@ -1,0 +1,28 @@
+name: Check CamelCase Filename
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check_camelcase_filename:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Check CamelCase Filename
+      run: |
+        # Check if files in packages/inula/scripts/__test__ follow Upper Camel Case
+        for file in $(find packages/inula/scripts/__test__ -type f); do
+          filename=$(basename "$file")
+          if [[ "$filename" =~ [^A-Za-z0-9]*([A-Z][a-z0-9]+)+([A-Z]|[a-z0-9]+)* ]]; then
+            echo "File name $filename is in Upper Camel Case."
+          else
+            echo "File name $filename does not follow Upper Camel Case."
+            exit 1
+          fi
+        done
