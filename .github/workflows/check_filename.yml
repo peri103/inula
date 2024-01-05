@@ -37,22 +37,23 @@ jobs:
       - name: Check Test Folders
         run: |
           # Check if test folders and their subfolders end with 'Test' and follow Upper Camel Case
-          find packages/inula/scripts/__tests__ -type d -name '*Test' -print0 | while IFS= read -r -d $'\0' folder; do
-            foldername=$(basename "$folder")
+          find packages/inula/scripts/__tests__ -type d -name '*Test' -exec bash -c '
+            for folder; do
+              foldername=$(basename "$folder")
 
-            # Check if foldername ends with 'Test'
-            if [[ "$foldername" =~ Test$ ]]; then
-              echo "Folder name $foldername ends with 'Test'."
-            else
-              echo "Folder name $foldername does not end with 'Test'."
-              exit 1
-            fi
+              # Check if foldername ends with 'Test'
+              if [[ "$foldername" =~ Test$ ]]; then
+                echo "Folder name $foldername ends with 'Test'."
+              else
+                echo "Folder name $foldername does not end with 'Test'."
+                exit 1
+              fi
 
-            # Check if foldername follows Upper Camel Case
-            if [[ "$foldername" =~ [^A-Za-z0-9]*([A-Z][a-z0-9]+)+([A-Z]|[a-z0-9]+)* ]]; then
-              echo "Folder name $foldername is in Upper Camel Case."
-            else
-              echo "Folder name $foldername does not follow Upper Camel Case."
-              exit 1
-            fi
-          done
+              # Check if foldername follows Upper Camel Case
+              if [[ "$foldername" =~ [^A-Za-z0-9]*([A-Z][a-z0-9]+)+([A-Z]|[a-z0-9]+)* ]]; then
+                echo "Folder name $foldername is in Upper Camel Case."
+              else
+                echo "Folder name $foldername does not follow Upper Camel Case."
+                exit 1
+              fi
+            done
