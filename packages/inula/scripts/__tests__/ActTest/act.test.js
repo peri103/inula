@@ -15,7 +15,7 @@
 
 import Inula, { render, useState, act, useEffect } from '../../../src/index';
 
-describe('Inula.act function Test', () => {
+describe('ActTest', () => {
   it('The act can wait for the useEffect update to complete.', function () {
     const Parent = props => {
       const [buttonOptions, setBtn] = useState([]);

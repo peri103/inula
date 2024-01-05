@@ -58,3 +58,26 @@ jobs:
             fi
           done
         ' _ {} +
+
+	check_describe_arguments:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Check describe() Arguments
+      run: |
+        # Check if describe() first argument matches the file name (excluding .test.js)
+        for file in $(find packages/inula/scripts/__tests__ -type f -name '*.test.js'); do
+          filename=$(basename "$file" .test.js | tr -d "[:space:]" | tr '[:upper:]' '[:lower:]')
+          describe_line=$(grep -m 1 '^describe(' "$file")
+          describe_argument=$(echo "$describe_line" | sed -n 's/.*describe(\(.*\),.*/\1/p' | tr -d "[:space:]'" | tr '[:upper:]' '[:lower:]')
+
+          if [ "$describe_argument" == "$filename"test ]; then
+            echo "describe() first argument in $file matches the file name (ignoring spaces and case)."
+          else
+            echo "describe() first argument in $file does not match the file name (ignoring spaces and case)."
+            exit 1
+          fi
+        done
