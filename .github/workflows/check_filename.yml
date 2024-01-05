@@ -16,8 +16,8 @@ jobs:
 
     - name: Check CamelCase Filename
       run: |
-        # Check if files in packages/inula/scripts/__test__ follow Upper Camel Case
-        for file in $(find packages/inula/scripts/__test__ -type f); do
+        # Check if test files in packages/inula/scripts/__tests__ follow Upper Camel Case
+        for file in $(find packages/inula/scripts/__tests__ -type f -name '*.test.js'); do
           filename=$(basename "$file")
           if [[ "$filename" =~ [^A-Za-z0-9]*([A-Z][a-z0-9]+)+([A-Z]|[a-z0-9]+)* ]]; then
             echo "File name $filename is in Upper Camel Case."
