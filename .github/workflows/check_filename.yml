@@ -1,4 +1,4 @@
-name: Check CamelCase Filename
+name: Check Test Cases
 
 on:
   push:
@@ -7,22 +7,42 @@ on:
     branches: [main]
 
 jobs:
-  check_camelcase_filename:
+  check_test_files:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Check CamelCase Filename
-      run: |
-        # Check if test files in packages/inula/scripts/__tests__ follow Upper Camel Case
-        for file in $(find packages/inula/scripts/__tests__ -type f -name '*.test.js'); do
-          filename=$(basename "$file")
-          if [[ "$filename" =~ [^A-Za-z0-9]*([A-Z][a-z0-9]+)+([A-Z]|[a-z0-9]+)* ]]; then
-            echo "File name $filename is in Upper Camel Case."
-          else
-            echo "File name $filename does not follow Upper Camel Case."
-            exit 1
-          fi
-        done
+      - name: Check Test Files
+        run: |
+          # Check if test files in packages/inula/scripts/__tests__ follow Upper Camel Case
+          for file in $(find packages/inula/scripts/__tests__ -type f -name '*.test.js'); do
+            filename=$(basename "$file")
+            if [[ "$filename" =~ [^A-Za-z0-9]*([A-Z][a-z0-9]+)+([A-Z]|[a-z0-9]+)* ]]; then
+              echo "File name $filename is in Upper Camel Case."
+            else
+              echo "File name $filename does not follow Upper Camel Case."
+              exit 1
+            fi
+          done
+
+  check_test_folders:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Check Test Folders
+        run: |
+          # Check if test folders in packages/inula/scripts/__tests__ end with 'Test' and follow Upper Camel Case
+          for folder in $(find packages/inula/scripts/__tests__ -type d -name '*Test'); do
+            foldername=$(basename "$folder")
+            if [[ "$foldername" =~ [^A-Za-z0-9]*([A-Z][a-z0-9]+)+([A-Z]|[a-z0-9]+)* ]]; then
+              echo "Folder name $foldername is in Upper Camel Case."
+            else
+              echo "Folder name $foldername does not follow Upper Camel Case."
+              exit 1
+            fi
+          done
