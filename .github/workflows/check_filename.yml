@@ -31,53 +31,53 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Check Test Folders
-      run: |
-        # Check if subfolders of __tests__ end with 'Test' and follow Upper Camel Case
-        find packages/inula/scripts/__tests__ \( -name 'jest' -o -name 'utils' \) -prune -o -mindepth 1 -type d -exec bash -c '
-          for folder; do
-            foldername=$(basename "$folder")
+      - name: Check Test Folders
+        run: |
+          # Check if subfolders of __tests__ end with 'Test' and follow Upper Camel Case
+          find packages/inula/scripts/__tests__ \( -name 'jest' -o -name 'utils' \) -prune -o -mindepth 1 -type d -exec bash -c '
+            for folder; do
+              foldername=$(basename "$folder")
 
-            # Check if foldername ends with 'Test'
-            if [[ "$foldername" =~ Test$ ]]; then
-              echo "Folder name $foldername ends with 'Test'."
-            else
-              echo "Folder name $foldername does not end with 'Test'."
-              exit 1
-            fi
+              # Check if foldername ends with 'Test'
+              if [[ "$foldername" =~ Test$ ]]; then
+                echo "Folder name $foldername ends with 'Test'."
+              else
+                echo "Folder name $foldername does not end with 'Test'."
+                exit 1
+              fi
 
-            # Check if foldername follows Upper Camel Case
-            if [[ "$foldername" =~ [^A-Za-z0-9]*([A-Z][a-z0-9]+)+([A-Z]|[a-z0-9]+)* ]]; then
-              echo "Folder name $foldername is in Upper Camel Case."
-            else
-              echo "Folder name $foldername does not follow Upper Camel Case."
-              exit 1
-            fi
-          done
-        ' _ {} +
+              # Check if foldername follows Upper Camel Case
+              if [[ "$foldername" =~ [^A-Za-z0-9]*([A-Z][a-z0-9]+)+([A-Z]|[a-z0-9]+)* ]]; then
+                echo "Folder name $foldername is in Upper Camel Case."
+              else
+                echo "Folder name $foldername does not follow Upper Camel Case."
+                exit 1
+              fi
+            done
+          ' _ {} +
 
-	check_describe_arguments:
+  check_describe_arguments:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Check describe() Arguments
-      run: |
-        # Check if describe() first argument matches the file name (excluding .test.js)
-        for file in $(find packages/inula/scripts/__tests__ -type f -name '*.test.js'); do
-          filename=$(basename "$file" .test.js | tr -d "[:space:]" | tr '[:upper:]' '[:lower:]')
-          describe_line=$(grep -m 1 '^describe(' "$file")
-          describe_argument=$(echo "$describe_line" | sed -n 's/.*describe(\(.*\),.*/\1/p' | tr -d "[:space:]'" | tr '[:upper:]' '[:lower:]')
+      - name: Check describe() Arguments
+        run: |
+          # Check if describe() first argument matches the file name (excluding .test.js)
+          for file in $(find packages/inula/scripts/__tests__ -type f -name '*.test.js'); do
+            filename=$(basename "$file" .test.js | tr -d "[:space:]" | tr '[:upper:]' '[:lower:]')
+            describe_line=$(grep -m 1 '^describe(' "$file")
+            describe_argument=$(echo "$describe_line" | sed -n 's/.*describe(\(.*\),.*/\1/p' | tr -d "[:space:]'" | tr '[:upper:]' '[:lower:]')
 
-          if [ "$describe_argument" == "$filename"test ]; then
-            echo "describe() first argument in $file matches the file name (ignoring spaces and case)."
-          else
-            echo "describe() first argument in $file does not match the file name (ignoring spaces and case)."
-            exit 1
-          fi
-        done
+            if [ "$describe_argument" == "$filename"test ]; then
+              echo "describe() first argument in $file matches the file name (ignoring spaces and case)."
+            else
+              echo "describe() first argument in $file does not match the file name (ignoring spaces and case)."
+              exit 1
+            fi
+          done
