@@ -36,8 +36,8 @@ jobs:
 
       - name: Check Test Folders
         run: |
-          # Check if test folders and their subfolders end with 'Test' and follow Upper Camel Case
-          find packages/inula/scripts/__tests__ -type d -name '__tests__' -prune -o -exec bash -c '
+          # Check if subfolders of __tests__ end with 'Test' and follow Upper Camel Case
+          find packages/inula/scripts/__tests__ -mindepth 1 -type d -exec bash -c '
             for folder; do
               foldername=$(basename "$folder")
 
