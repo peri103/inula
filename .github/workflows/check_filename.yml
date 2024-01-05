@@ -75,9 +75,9 @@ jobs:
             describe_argument=$(echo "$describe_line" | sed -n 's/.*describe(\(.*\),.*/\1/p' | tr -d "[:space:]'" | tr '[:upper:]' '[:lower:]')
 
             if [ "$describe_argument" == "$filename"test ]; then
-              echo "describe() first argument in $file matches the file name (ignoring spaces and case)."
+              echo "describe() first argument in $file matches the file name."
             else
-              echo "describe() first argument in $file does not match the file name (ignoring spaces and case)."
+              echo "describe() first argument in $file does not match the file name."
               exit 1
             fi
           done
