@@ -20,11 +20,19 @@ describe('deepMerge function', () => {
     expect(deepMerge()).toEqual({});
   });
 
+  // it('should merge two objects', () => {
+  //   const obj1 = { a: 1, b: { c: 2 } };
+  //   const obj2 = { b: { d: 3 }, e: 4 };
+  //   expect(deepMerge(obj1, obj2)).toEqual({ a: 1, b: { c: 2, d: 3 }, e: 4 });
+  // });
+
   it('should merge two objects', () => {
     const obj1 = { a: 1, b: { c: 2 } };
     const obj2 = { b: { d: 3 }, e: 4 };
-    expect(deepMerge(obj1, obj2)).toEqual({ a: 1, b: { c: 2, d: 3 }, e: 4 });
+    // 修改期望值以使测试失败
+    expect(deepMerge(obj1, obj2)).toEqual({ a: 1, b: { d: 3 }, e: 4 });
   });
+  
 
   it('should merge three or more objects', () => {
     const obj1 = { a: 1, b: { c: 2 } };
